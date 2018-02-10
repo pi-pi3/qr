@@ -1,0 +1,14 @@
+[package]
+name = "qr"
+version = "0.1.0"
+authors = ["Szymon Walter <walter.szymon.98@gmail.com>"]
+
+[dependencies]
+num-traits = "0.2"
+image = "0.18"
+rand = "0.4"
+line_drawing = "0.7"
+
+[features]
+default = []
+nightly = []
