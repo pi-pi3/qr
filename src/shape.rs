@@ -7,6 +7,7 @@ use line::{self, Line};
 use rect::{self, Rectangle};
 use tri::{self, Triangle};
 
+/// A dynamic primitive over all the other primitives.
 #[derive(Clone, Copy, Debug)]
 pub enum Shape<T> {
     Point(Point<T>),
@@ -77,6 +78,7 @@ where
     }
 }
 
+/// A dynamic `Iterator` over the other primitive point `Iterator`-s.
 #[derive(Debug)]
 pub enum IntoIter<T: Float + FloatNum + SignedNum + Copy + 'static>
 where

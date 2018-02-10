@@ -5,6 +5,7 @@ use line_drawing::{FloatNum, Midpoint, SignedNum};
 use renderer::{Coord, Drawable};
 use point::Point2;
 
+/// Euclidean + barycentric coordinate on a line.
 pub type Coordinate<T> = (Point2<T>, [T; 2]);
 
 impl<T: Copy> Coord<T> for Coordinate<T> {

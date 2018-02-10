@@ -1,4 +1,33 @@
+#![allow(unknown_lints)]
+#![allow(inline_always)]
+#![cfg_attr(feature = "check-docs", deny(missing_docs))]
 #![cfg_attr(all(test, feature = "nightly"), feature(test))]
+
+//! # qr - A 2D/3D software rendering library
+//!
+//! # Example
+//!
+//! ```rust,norun
+//! extern crate qr;
+//!
+//! use std::iter;
+//!
+//! use qr::{Triangle, Renderer, SimpleRenderer};
+//!
+//! const WIDTH: usize = 128;
+//! const HEIGHT: usize = 128;
+//!
+//! fn main() {
+//!     let mut renderer = SimpleRenderer::new(WIDTH, HEIGHT);
+//!     let triangle = Triangle::with_points([(0.0, 0.0), (100.0, 100.0), (0.0, 100.0)]);
+//!     let mesh = iter::once(triangle);
+//!
+//!     renderer.set_attr(0, (255_u8, 255_u8, 255_u8));
+//!     if let Ok((s, v, f)) = renderer.draw(mesh) {
+//!         println!("drawn {} primitives, {} vertices and {} fragments", s, v, f);
+//!     }
+//! }
+//! ```
 
 extern crate image;
 extern crate line_drawing;
@@ -14,7 +43,7 @@ pub mod line;
 pub mod rect;
 pub mod tri;
 
-pub use renderer::{Coord, Drawable, Renderer};
+pub use renderer::{Coord, Drawable, Renderer, SimpleRenderer};
 pub use shape::Shape;
 pub use point::{Point, Point2};
 pub use line::Line;
