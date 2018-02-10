@@ -278,8 +278,14 @@ mod tests {
     #[cfg(feature = "nightly")]
     #[bench]
     fn attr8_tri(b: &mut Bencher) {
-        let dot = |(ax, ay, az), (bx, by, bz)| ax*bx + ay*by + az*bz;
-        let rand = |m| (rand::random::<f64>() * m, rand::random::<f64>() * m, rand::random::<f64>() * m);
+        let dot = |(ax, ay, az), (bx, by, bz)| ax * bx + ay * by + az * bz;
+        let rand = |m| {
+            (
+                rand::random::<f64>() * m,
+                rand::random::<f64>() * m,
+                rand::random::<f64>() * m,
+            )
+        };
 
         const BPP: usize = 24;
         const WIDTH: usize = 1024;
@@ -295,7 +301,7 @@ mod tests {
 
         // light normal
         let (lx, ly, lz) = rand(1.0);
-        let len_recip = (lx*lx + ly*ly + lz*lz).sqrt().recip();
+        let len_recip = (lx * lx + ly * ly + lz * lz).sqrt().recip();
         let (lx, ly, lz) = (lx * len_recip, ly * len_recip, lz * len_recip);
 
         b.iter(|| {
@@ -314,9 +320,9 @@ mod tests {
             let (nz0, nz1, nz2) = rand(1.0);
 
             // normalize normal
-            let len_recip0 = (nx0*nx0 + ny0*ny0 + nz0*nz0).sqrt().recip();
-            let len_recip1 = (nx1*nx1 + ny1*ny1 + nz1*nz1).sqrt().recip();
-            let len_recip2 = (nx2*nx2 + ny2*ny2 + nz2*nz2).sqrt().recip();
+            let len_recip0 = (nx0 * nx0 + ny0 * ny0 + nz0 * nz0).sqrt().recip();
+            let len_recip1 = (nx1 * nx1 + ny1 * ny1 + nz1 * nz1).sqrt().recip();
+            let len_recip2 = (nx2 * nx2 + ny2 * ny2 + nz2 * nz2).sqrt().recip();
 
             let nx0 = nx0 * len_recip0;
             let nx1 = nx1 * len_recip1;
@@ -367,7 +373,8 @@ mod tests {
                     // simulate sampling texture
                     let width = 1024;
                     let height = 1024;
-                    let index = (width as f64 * tu) as usize + (height as f64 * tv) as usize * width;
+                    let index =
+                        (width as f64 * tu) as usize + (height as f64 * tv) as usize * width;
                     let _index = black_box(index);
 
                     image.put_pixel(x, y, Rgb::from_channels(r as u8, g as u8, b as u8, 255));
