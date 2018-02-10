@@ -8,10 +8,12 @@ use point::Point2;
 pub type Coordinate<T> = (Point2<T>, [T; 2]);
 
 impl<T: Copy> Coord<T> for Coordinate<T> {
+    #[inline(always)]
     fn point(&self) -> Point2<T> {
         self.0
     }
 
+    #[inline(always)]
     fn barycentric(&self) -> Option<&[T]> {
         Some(&self.1)
     }
@@ -24,6 +26,7 @@ pub struct Line<T> {
 }
 
 impl<T: FloatNum + SignedNum> Drawable<T, Coordinate<T>> for Line<T> {
+    #[inline(always)]
     fn vertices(&self) -> usize {
         2
     }
@@ -33,6 +36,7 @@ impl<T: FloatNum + SignedNum> IntoIterator for Line<T> {
     type Item = Coordinate<T>;
     type IntoIter = IntoIter<T>;
 
+    #[inline]
     fn into_iter(self) -> Self::IntoIter {
         let start = self.start;
         let dx = self.end.0 - self.start.0;
@@ -58,6 +62,7 @@ pub struct IntoIter<T: FloatNum + SignedNum> {
 impl<T: FloatNum + SignedNum> Iterator for IntoIter<T> {
     type Item = Coordinate<T>;
 
+    #[inline]
     fn next(&mut self) -> Option<Self::Item> {
         self.inner.next().map(|(x, y)| {
             let dx = x - self.start.0;

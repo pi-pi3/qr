@@ -20,6 +20,7 @@ impl<T: Float + FloatNum + SignedNum + AsPrimitive<i64> + Copy + 'static> Drawab
 where
     i64: AsPrimitive<T>,
 {
+    #[inline]
     fn vertices(&self) -> usize {
         match *self {
             Shape::Point(ref point) => point.vertices(),
@@ -31,24 +32,28 @@ where
 }
 
 impl<T> From<Point<T>> for Shape<T> {
+    #[inline(always)]
     fn from(point: Point<T>) -> Self {
         Shape::Point(point)
     }
 }
 
 impl<T> From<Line<T>> for Shape<T> {
+    #[inline(always)]
     fn from(line: Line<T>) -> Self {
         Shape::Line(line)
     }
 }
 
 impl<T> From<Rectangle<T>> for Shape<T> {
+    #[inline(always)]
     fn from(rect: Rectangle<T>) -> Self {
         Shape::Rect(rect)
     }
 }
 
 impl<T> From<Triangle<T>> for Shape<T> {
+    #[inline(always)]
     fn from(tri: Triangle<T>) -> Self {
         Shape::Tri(tri)
     }
@@ -61,6 +66,7 @@ where
     type Item = Point2<T>;
     type IntoIter = IntoIter<T>;
 
+    #[inline]
     fn into_iter(self) -> Self::IntoIter {
         match self {
             Shape::Point(point) => IntoIter::Point(point.into_iter()),
@@ -88,6 +94,7 @@ where
 {
     type Item = Point2<T>;
 
+    #[inline]
     fn next(&mut self) -> Option<Self::Item> {
         match *self {
             IntoIter::Point(ref mut point) => point.next(),

@@ -7,10 +7,12 @@ use rect::{self, Rectangle};
 pub type Coordinate<T> = (Point2<T>, [T; 3]);
 
 impl<T: Copy> Coord<T> for Coordinate<T> {
+    #[inline(always)]
     fn point(&self) -> Point2<T> {
         self.0
     }
 
+    #[inline(always)]
     fn barycentric(&self) -> Option<&[T]> {
         Some(&self.1)
     }
@@ -25,16 +27,19 @@ impl<T: Float + AsPrimitive<i64> + Copy + 'static> Drawable<T, Coordinate<T>> fo
 where
     i64: AsPrimitive<T>,
 {
+    #[inline(always)]
     fn vertices(&self) -> usize {
         3
     }
 }
 
 impl<T: Float + AsPrimitive<i64>> Triangle<T> {
+    #[inline(always)]
     pub fn with_points(points: [Point2<T>; 3]) -> Triangle<T> {
         Triangle { points }
     }
 
+    #[inline]
     pub fn det(&self) -> T {
         let (x1, y1) = self.points[0];
         let (x2, y2) = self.points[1];
@@ -51,6 +56,7 @@ where
     type Item = Coordinate<T>;
     type IntoIter = IntoIter<T>;
 
+    #[inline]
     fn into_iter(self) -> Self::IntoIter {
         let det = self.det();
         let points = self.points;
@@ -77,6 +83,7 @@ where
 {
     type Item = Coordinate<T>;
 
+    #[inline]
     fn next(&mut self) -> Option<Self::Item> {
         loop {
             match self.rect.next() {

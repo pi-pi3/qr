@@ -15,6 +15,7 @@ pub struct Rectangle<T> {
 }
 
 impl<T> Rectangle<T> {
+    #[inline(always)]
     pub fn new(x0: T, x1: T, y0: T, y1: T) -> Self {
         Rectangle { x0, x1, y0, y1 }
     }
@@ -24,6 +25,7 @@ impl<T: Copy + AsPrimitive<i64> + 'static> Drawable<T, Point2<T>> for Rectangle<
 where
     i64: AsPrimitive<T>,
 {
+    #[inline(always)]
     fn vertices(&self) -> usize {
         4
     }
@@ -36,6 +38,7 @@ where
     type Item = Point2<T>;
     type IntoIter = IntoIter<T>;
 
+    #[inline]
     fn into_iter(self) -> Self::IntoIter {
         let x0 = self.x0.as_();
         let x1 = self.x1.as_();
@@ -73,6 +76,7 @@ where
 {
     type Item = Point2<T>;
 
+    #[inline]
     fn next(&mut self) -> Option<Self::Item> {
         let x = self.x.next().or_else(|| {
             self.height
