@@ -95,3 +95,16 @@ where
         x.and_then(|x| self.y.map(|y| (x.as_(), y.as_())))
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::Rectangle;
+
+    #[test]
+    fn rect() {
+        assert_eq!(
+            Rectangle::new(0, 2, 0, 2).into_iter().collect::<Vec<_>>(),
+            [(0, 0), (1, 0), (0, 1), (1, 1),]
+        )
+    }
+}
